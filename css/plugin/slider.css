@@ -1,0 +1,132 @@
+.slider {
+  width: 600px;
+  position: relative;
+  margin: auto;
+}
+
+.slider__holder {
+  width: 100%;
+  height: 300px;
+  /*#DY*/
+  position: relative;
+  overflow: hidden;
+
+}
+
+.slider__item {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: -999999px;
+  left: auto;
+  /*#DY*/
+  transition: left .7s ease-in;
+}
+
+  .slider__item.prev, 
+  .slider__item.current, 
+  .slider__item.next{
+    top: 0;
+  }
+
+  .slider__item.prev {
+    left:-100%;
+
+  }
+
+  .slider__item.current {
+    left: 0;
+  }
+
+  .slider__item.next {
+    left: 100%;
+  }
+ 
+  .slider[data-type="vertical"] .slider__item {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: -999999px;
+    left: auto;
+    transition: top .7s ease-in;
+  }
+  
+    .slider[data-type="vertical"] .slider__item.prev, 
+    .slider[data-type="vertical"] .slider__item.current, 
+    .slider[data-type="vertical"] .slider__item.next{
+      left: 0;
+    }
+  
+    .slider[data-type="vertical"] .slider__item.prev {
+      top:-100%;
+  
+    }
+  
+    .slider[data-type="vertical"] .slider__item.current {
+      top: 0;
+    }
+  
+    .slider[data-type="vertical"] .slider__item.next {
+      top: 100%;
+    }
+  .slider__item img {
+    height: 100%;
+    width: 100%;      
+    object-fit: cover;
+  }
+
+.slider__actions {
+  text-align: center;
+}
+
+.slider__control {
+  padding: 10px 20px;
+  border-radius: 50px;
+  border: 2px solid blueviolet;
+  color:blueviolet;
+  background: transparent;
+  outline: none;
+}
+
+.slider__actions {
+margin-bottom: 10px;
+}
+
+.slider__control[data-action="prev"] {
+  position: absolute;
+  top:134.25px;
+  left: 0%;
+}
+
+.slider__control[data-action="next"] {
+  position: absolute;
+  top:134.25px;
+  left: 548.2px;
+}
+.slider[data-type="vertical"] .slider__control[data-action="prev"]{
+  position: absolute;
+  top:0%;
+  left:274.1015px;
+}
+.slider[data-type="vertical"] .slider__control[data-action="next"]{
+  position: absolute;
+  top:260px;
+  left:274.105px;
+}
+
+.slider__paging{
+  display: flex;
+  justify-content:center; 
+}
+
+.slider__paging span:empty{
+  display: block;
+  width: 20px;
+  height: 20px;
+  background:blueviolet;
+  margin-right: 5px;
+  border-radius: 50%;
+}
+.slider__paging span.active{
+  background: red;
+}

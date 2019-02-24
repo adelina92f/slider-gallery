@@ -1,5 +1,5 @@
 $(function(){
-    if(typeof adiSlider === 'function'){
-        adiSlider();
+    if(typeof adiSlider === '{}'){
+        this.adiSlider();
     }
 })

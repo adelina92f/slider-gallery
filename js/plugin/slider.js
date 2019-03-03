@@ -8,6 +8,7 @@ let adiSlider = {
     $paging : null,
     $pagingPoints : null,
     activePoint : null,
+    
 },
 initSlider:function(){
     this.init();

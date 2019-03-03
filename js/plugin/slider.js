@@ -1,23 +1,22 @@
 let adiSlider = {
    settings:{ 
-    $slider : null,
+    $slider : $('.slider'),
     $items : null,
     current: null,
-    $current :null,
-    $control :null,
-    $paging :null,
+    $current : null,
+    $control : null,
+    $paging : null,
     $pagingPoints : null,
     activePoint : null,
 },
-initSlider:function (){
+initSlider:function(){
     this.init();
    
     this.bindEvents(); 
 },
 init:function(image_index){
-    this.$slider = $('.slider');
-    this.settings.$items = $slider.find('.slider__item');
-    this.image_index = checkImageIndex(image_index);
+    this.settings.$items = this.settings.$slider.find('.slider__item')
+    this.image_index = this.checkImageIndex(image_index);
     let image = this.settings.$items.get(image_index);
     let $image = $(image);
     this.createPoints()
@@ -28,9 +27,9 @@ checkImageIndex:function (image_index){
     this.image_index = (image_index > this.settings.$items.lenght-1)?this.settings.$items.lenght-1: this.image_index;
     return this.image_index;
 }, 
-createPoints:function (){
-    let itemsLength =this.settings.$items.length;
-    this.settings.$paging = $slider.find('.slider__paging');
+createPoints:function(){
+    this.settings.$paging = this.settings.$slider.find('.slider__paging');
+    let itemsLength = this.settings.$items.length;
     let list = "";
     for (let i = 0; i < itemsLength; i++) {
        list += '<span data-image="'+i+'"></span>';
@@ -39,11 +38,11 @@ createPoints:function (){
        $image.attr('data-image', i);
     }
     
-    this.$('.slider__paging').append(list);  
-    $pagingPoints = this.settings.$paging.find('span[data-image]');
+    this.settings.$paging.append(list);  
+    this.settings.$pagingPoints = this.settings.$paging.find('span[data-image]');
 }, 
-bindEvents:function  (){
-    this.settings.$control =  $slider.find('.slider__control'); 
+bindEvents:function(){
+    this.settings.$control = this.$slider.find('.slider__control');
     this.$control.on('click', function(e){
         let action =$(this).data('action');
         this.sliderAction(action);
@@ -67,22 +66,62 @@ sliderAction:function(action){
     }
 },
     next:function (){
-        current = this.settings.$slider.find('.slider__item.current')
+        this.settings.$current = this.$slider.find('.slider__item.current');
         let $next = this.settings.$current.next();
         if(!isExist($next)){
             $next =  this.settings.$items.first(); 
         }
-        return setCurrent($next);
+        return this.setCurrent($next);
     },
 
     prev:function (){
-        let $prev = this.settings.$current.prev();
+        let $prev = $current.prev();
         if(!isExist($prev)){ //!!!
             $prev =  this.settings.$items.last(); 
         }
 
-        return setCurrent($prev);
+        return this.setCurrent($prev);
     },
-   
+    setCurrent:function ($newCurrent){
+        this.reset();
+        this.settings.$current = $newCurrent;
+        let current_index = this.settings.$current.data('image');
+
+        let $prev = this.getPrev(this.settings.$current);
+        let $next = this.getNext(this.settings.$current);
+
+        $prev.addClass('prev');
+        $next.addClass('next');
+        this.settings.$current.addClass('current');
+
+        this.setCurrentPoint(current_index)
+
+        return this.settings.$current;
+    }, 
+    setCurrentPoint:function (index){
+        this.settings.activePoint = $('span[data-image='+ index +']').addClass('active');
+     },
+     getPrev:function($element){
+        let $prev = $element.prev();
+        if(!this.isExist($prev)){
+            $prev = this.settings.$items.last(); 
+        }
+        return this.$prev;
+    }, 
+    getNext:function ($element){
+        let $next = this.settings.$element.next();
+        if(!isExist($next)){
+            $next = this.settings.$items.first(); 
+        }
+        return this.$next;
+    },
+    reset:function (){
+        this.settings.$pagingPoints.removeClass('active');
+        this.settings.$items.removeClass('prev current next');
+        
+    },
+    isExist:function($element){
+        return $element.length !== 0;
+    }
 } 
 adiSlider.initSlider()

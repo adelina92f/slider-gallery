@@ -44,10 +44,18 @@ createPoints:function(){
 }, 
 bindEvents:function(){
     this.settings.$control = this.settings.$slider.find('.slider__control');
-    this.settings.$control.on('click', function(e){
-        let action =$(this).data('action');
-        let sliderAction = (() =>{
-        switch(action) {
+    //$(..).on('click', (event) => { ... } )
+    this.settings.$control.on('click', (event) => {
+        let action = $(this).data('action');
+        //console.log(this.settings.$control);
+       // console.log(this);
+       // console.log(adiSlider);
+        this.sliderAction(action)     
+    })
+},
+
+sliderAction: function(action){
+    switch(action) {
         case 'next':
             this.next();
             console.log("next is action");
@@ -62,12 +70,7 @@ bindEvents:function(){
             console.log('Unknow action, pleace be careful');
             break;
         }
-        }
-    )})
 },
-//sliderAction: function(action){
-    
-//},
     next:function (){
         this.settings.$current = this.$slider.find('.slider__item.current');
         let $next = this.settings.$current.next();

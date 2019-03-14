@@ -44,18 +44,25 @@ createPoints:function(){
 }, 
 bindEvents:function(){
     this.settings.$control = this.settings.$slider.find('.slider__control');
-    //$(..).on('click', (event) => { ... } )
-    this.settings.$control.on('click', (event) => {
-        let action = $(this).data('action');
-        //console.log(this.settings.$control);
-       // console.log(this);
-       // console.log(adiSlider);
-        this.sliderAction(action)     
+    this.settings.$control.on('click',(event) =>{
+        let button = event.target;
+        let $button = $(button).data('action'); 
+         console.log($button);
+      this.sliderAction($button);
+       
+        //console.log(event.target);
+        //console.log(this);
     })
+    //this.settings.$control.on('click',function(event){
+    //    let button = this;
+    //    let $button = $(button); 
+    //    console.log(this);
+    //    console.log(adiSlider);
+    // })
 },
 
-sliderAction: function(action){
-    switch(action) {
+sliderAction: function($button){
+    switch($button) {
         case 'next':
             this.next();
             console.log("next is action");
@@ -72,17 +79,17 @@ sliderAction: function(action){
         }
 },
     next:function (){
-        this.settings.$current = this.$slider.find('.slider__item.current');
+        this.settings.$current = $('.slider').find('.slider__item.current');
         let $next = this.settings.$current.next();
-        if(!isExist($next)){
+        if(!this.isExist($next)){
             $next =  this.settings.$items.first(); 
         }
         return this.setCurrent($next);
     },
 
     prev:function (){
-        let $prev = $current.prev();
-        if(!isExist($prev)){ //!!!
+        let $prev = this.settings.$current.prev();
+        if(!this.isExist($prev)){ //!!!
             $prev =  this.settings.$items.last(); 
         }
 

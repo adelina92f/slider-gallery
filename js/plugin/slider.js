@@ -42,7 +42,7 @@ createPoints:function(){
     
     this.settings.$paging.append(list);  
     this.settings.$pagingPoints = this.settings.$paging.find('span[data-image]');
-    this.playList();
+    this.autoPlay();
 }, 
 bindEvents:function(){
     this.settings.$control = this.settings.$slider.find('.slider__control');
@@ -119,7 +119,7 @@ sliderAction: function($button){
         return this.settings.$current;
         
     }, 
-   playList:function(){
+    autoPlay:function(){
     setInterval(() => { this.next() }, this.settings.interval)
    },
 

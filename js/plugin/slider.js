@@ -8,24 +8,25 @@ let adiSlider = {
     $paging : null,
     $pagingPoints : null,
     activePoint : null,
-    interval : 5000,
+    interval : 7000,
     image_index:null,
 },
 initSlider:function(){
     this.init(); 
     this.bindEvents(); 
+    this.bindEventPoint();
 },
 init:function(number){
     this.settings.$items = this.settings.$slider.find('.slider__item')
     this.checkImageIndex(number);
     let image = this.settings.$items.get(this.settings.image_index);
-    console.log(image);
+    //console.log(image);
     let $image = $(image);
     this.createPoints()
     return this.setCurrent($image);
 },
 checkImageIndex:function (number){
-    console.log(number);
+    //console.log(number);
     number = (typeof(number)=== 'undefined' || number < 0)? 0: number;
     this.settings.image_index = (number > this.settings.$items.lenght-1)? this.settings.$items.lenght-1:number;
 }, 
@@ -42,18 +43,27 @@ createPoints:function(){
     
     this.settings.$paging.append(list);  
     this.settings.$pagingPoints = this.settings.$paging.find('span[data-image]');
-    this.autoPlay();
+    
+    //this.autoPlay();
 }, 
+bindEventPoint:function(){
+    (this.settings.$pagingPoints).on('click', (e) => {
+        let button = e.target;
+        let $button = $(button).data('image');
+        this.newCurrent($button);
+    })
+},
+
 bindEvents:function(){
     this.settings.$control = this.settings.$slider.find('.slider__control');
     this.settings.$control.on('click',(event) =>{
         let button = event.target;
         let $button = $(button).data('action'); 
-        console.log($button);
+        //console.log($button);
         this.sliderAction($button);
        
-        console.log(event.target);
-        console.log(this);
+        //console.log(event.target);
+        //console.log(this);
     })
 
 //    this.settings.$control.on('click',function(event){
@@ -66,7 +76,7 @@ bindEvents:function(){
 },
 
 sliderAction: function($button){
-    switch($button) {
+    switch($button) {   
         case 'next':
             this.next();
             console.log("next is action");
@@ -81,7 +91,7 @@ sliderAction: function($button){
            console.log('Unknow action, pleace be careful');
             break;
         }
-},
+    },
        next:function (){
         this.settings.$current = $('.slider').find('.slider__item.current');
         let $next = this.settings.$current.next();
@@ -98,23 +108,28 @@ sliderAction: function($button){
 
         return this.setCurrent($prev);
     },
+    newCurrent:function($button){
+       // this.reset();
+        this.settings.$current = $('div[data-image='+ $button +']').addClass('current');
+        this.setCurrent(this.settings.$current);
+    },
     setCurrent:function ($newCurrent){
         this.reset();
         this.settings.$current = $newCurrent;
-        let current_index = this.settings.$current.data('image');
+        let current_index =  this.settings.$current.data('image');
 
-        console.log('current index e '+current_index);
+        //console.log('current index e '+current_index);
         let $prev = this.getPrev();
         let $next = this.getNext();
         //console.log($next);
         
         $prev.addClass('prev');
-        console.log(this.settings.$current);
+        //console.log(this.settings.$current);
         $next.addClass('next');
-        console.log($newCurrent);
+       // console.log($newCurrent);
     
         this.settings.$current.addClass('current');
-        console.log($prev);
+        //console.log($prev);
         this.setCurrentPoint(current_index)
         return this.settings.$current;
         

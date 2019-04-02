@@ -57,6 +57,7 @@ bindEventPoint:function(){
 bindEvents:function(){
     this.settings.$control = this.settings.$slider.find('.slider__control');
     this.settings.$control.on('click',(event) =>{
+        this.settings.$items.removeClass('imageItems');
         let button = event.target;
         let $button = $(button).data('action'); 
         //console.log($button);
@@ -109,8 +110,9 @@ sliderAction: function($button){
         return this.setCurrent($prev);
     },
     newCurrent:function($button){
-       // this.reset();
+        this.reset();
         this.settings.$current = $('div[data-image='+ $button +']').addClass('current');
+        this.settings.$items.addClass('imageItems');
         this.setCurrent(this.settings.$current);
     },
     setCurrent:function ($newCurrent){
@@ -135,8 +137,8 @@ sliderAction: function($button){
         
     }, 
     autoPlay:function(){
-    setInterval(() => { this.next() }, this.settings.interval)
-   },
+    setInterval(() => { this.next() }, this.settings.interval) 
+    },
 
     setCurrentPoint:function (index){
         this.settings.activePoint = $('span[data-image='+ index +']').addClass('active');

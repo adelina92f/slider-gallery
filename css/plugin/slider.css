@@ -12,6 +12,27 @@
   overflow: hidden;
 
 }
+/*NEW*/
+.slider__item.imageItems {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: -999999px;
+  left: auto;
+  /*#DY*/
+  transition: top .7s ease-in;
+}
+
+  .slider[data-type="vertical"] .slider__item.imageItems {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: -999999px;
+    left: auto;
+    transition: left .7s ease-in;
+    
+  }
+  /* NEW*/
 
 .slider__item {
   position: absolute;
@@ -49,6 +70,7 @@
     top: -999999px;
     left: auto;
     transition: top .7s ease-in;
+    
   }
   
     .slider[data-type="vertical"] .slider__item.prev, 

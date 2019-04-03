@@ -45,13 +45,15 @@ createPoints:function(){
     this.settings.$pagingPoints = this.settings.$paging.find('span[data-image]');
     
     //this.autoPlay();
+    let autoPlay = setInterval(() => { this.next() }, this.settings.interval) ;
 }, 
 bindEventPoint:function(){
     (this.settings.$pagingPoints).on('click', (e) => {
         let button = e.target;
         let $button = $(button).data('image');
-        this.newCurrent($button);
+        this.newCurrent($button); 
     })
+    this.stopAutoPlay();
 },
 
 bindEvents:function(){
@@ -61,8 +63,11 @@ bindEvents:function(){
         let button = event.target;
         let $button = $(button).data('action'); 
         //console.log($button);
+
+        let autoPlay = setInterval(() => { this.next() }, this.settings.interval) ;
+
         this.sliderAction($button);
-       
+
         //console.log(event.target);
         //console.log(this);
     })
@@ -93,6 +98,11 @@ sliderAction: function($button){
             break;
         }
     },
+
+    stopAutoPlay:function(){
+        clearInterval(this.autoPlay);
+    },
+
        next:function (){
         this.settings.$current = $('.slider').find('.slider__item.current');
         let $next = this.settings.$current.next();
@@ -136,9 +146,9 @@ sliderAction: function($button){
         return this.settings.$current;
         
     }, 
-    autoPlay:function(){
-    setInterval(() => { this.next() }, this.settings.interval) 
-    },
+    //autoPlay:function(){
+    //setInterval(() => { this.next() }, this.settings.interval) 
+    //},
 
     setCurrentPoint:function (index){
         this.settings.activePoint = $('span[data-image='+ index +']').addClass('active');

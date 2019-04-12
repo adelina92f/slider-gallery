@@ -56,6 +56,8 @@ let adiSlider = {
 
         this.settings.$paging.append(list);
         this.settings.$pagingPoints = this.settings.$paging.find('span[data-image]');
+        this.settings.$pagingPoints.find('span')
+        this.settings.$pagingPoints.addClass('control');
 
         //let autoPlay = setInterval(() => { this.next() }, this.settings.interval) ;
     },
@@ -63,12 +65,12 @@ let adiSlider = {
     // Намира съответния клик.
     bindEvents: function () {
         this.settings.$control = this.settings.$slider.find('.slider__control');         
-        (this.settings.$pagingPoints), (this.settings.$control).on('click', (event) => { 
+        $('.control').on('click', (event) => {
+            this.resetAutoPlay(); 
             let action = event.target;
-            let $action = $(action).data('action');
-            let indexImage = $(action).data('image');
+            let $action = $(action).data('image');
+            this.sliderAction($action);
             console.log($action);
-            console.log(indexImage);
 
     //    this.settings.$control = this.settings.$slider.find('.slider__control');
     //this.settings.$control.on('click', (event) => {
@@ -95,17 +97,22 @@ let adiSlider = {
     sliderAction: function (action) {
         switch (action) {
             case 'next':
+            $('.slider__holder').find('.slider__item').removeClass('imageItems');
                 this.next();
                 console.log("next is action");
                 break;
 
             case 'prev':
+            $('.slider__holder').find('.slider__item').removeClass('imageItems');
                 this.prev();
                 console.log("prev is action")
                 break;
 
             default:
-                console.log('Unknow action, pleace be careful');
+            $('.slider__holder').find('.slider__item').addClass('imageItems');
+                this.controlPoint(action);
+
+                //console.log('Unknow action, pleace be careful');
                 break;
         }
     },
@@ -128,6 +135,10 @@ let adiSlider = {
         }
 
         return this.setCurrent($prev);
+    },
+    controlPoint:function(indexImage){
+        let $current = $('div[data-image=' + indexImage + ']');
+        this.setCurrent($current);
     },
 
     // Инициализира новият текущ елемент

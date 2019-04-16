@@ -97,19 +97,19 @@ let adiSlider = {
     sliderAction: function (action) {
         switch (action) {
             case 'next':
-            $('.slider__holder').find('.slider__item').removeClass('imageItems');
+            $('.slider__holder').find('.slider__item').removeClass('pointImage');
                 this.next();
                 console.log("next is action");
                 break;
 
             case 'prev':
-            $('.slider__holder').find('.slider__item').removeClass('imageItems');
+            $('.slider__holder').find('.slider__item').removeClass('pointImage');
                 this.prev();
                 console.log("prev is action")
                 break;
 
             default:
-            $('.slider__holder').find('.slider__item').addClass('imageItems');
+            $('.slider__holder').find('.slider__item').addClass('pointImage');
                 this.controlPoint(action);
 
                 //console.log('Unknow action, pleace be careful');
